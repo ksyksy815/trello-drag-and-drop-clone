@@ -1,18 +1,91 @@
+import { addCardBtn, addNewCardForm } from './components.js'
+
 /*--- variables ---*/
 
 const addListBtn = document.querySelector('#add-btn')
 const initialList = document.querySelector('#initial-list')
 const main = document.querySelector('#list-board')
 
-// states
-let newListFormOn = false
-
+const dummyData = [
+  {
+    name: '리스트1',
+    cards: [
+      '카드1',
+      '카드2',
+      '카드3'
+    ]
+  },
+  {
+    name: '리스트2',
+    cards: [
+      '카드1',
+      '카드2',
+      '카드3'
+    ]
+  }
+]
 
 
 /*--- functions ---*/
-// const init = () => {
-  
-// }
+
+/* <section>
+  <ul class="item-list">
+    <span class="list-title">리스트 이름 <i class="fas fa-ellipsis-h"></i></span>
+    <li>카드1</li>
+    <li>카드2</li>
+    <li>카드3</li>
+    <form id="new-card-form">
+      <textarea></textarea>
+      <span class="add-btn-box">
+        <button type="submit" class="green-btn">Add</button>
+        <button>X</button>
+      </span>
+    </form>
+  </ul>
+</section> */
+
+
+const initializeLists = (data) => {
+  data.forEach(list => {
+    const section = document.createElement('section')
+    const ul = document.createElement('ul')
+    const span = document.createElement('span')
+    const i = document.createElement('i')
+    const btnWrapper = document.createElement('div')
+    const btn = addCardBtn()
+    
+    ul.classList.add('item-list')
+    span.classList.add('list-title')
+    span.textContent = list.name
+    i.setAttribute('class', 'fas fa-ellipsis-h')
+    
+    btnWrapper.addEventListener('click', () => addNewCardForm(btnWrapper))
+
+    section.appendChild(ul)
+    ul.appendChild(span)
+    span.appendChild(i)
+    for (let i = 0; i < list.cards.length; i++) {
+      const li = document.createElement('li')
+      li.textContent = list.cards[i]
+      ul.appendChild(li)
+    }
+    btnWrapper.appendChild(btn)
+    ul.appendChild(btnWrapper)
+    main.appendChild(section)
+  })
+}
+
+const init = () => {
+  // const response = await fetch('http://localhost:4000/lists', {
+  //   method: "GET",
+  //   mode: "cors",
+  //   headers: {
+  //     "Content-Type": "application/json"
+  //   }
+  // })
+  // console.log(response.json())
+  initializeLists(dummyData)
+}
 
 const closeNewCardForm = (e, ul, form) => {
   e.preventDefault()
@@ -75,7 +148,7 @@ const closeNewListForm = (e, form) => {
   initialList.removeChild(form)
 }
 
-const generateNewListForm = () => {
+const openNewListForm = () => {
   const form = document.createElement('form')
   const input = document.createElement('input')
   const span = document.createElement('span')
@@ -105,5 +178,5 @@ const generateNewListForm = () => {
 
 /*--- Init & Event listeners ---*/
 
-//init()
-addListBtn.addEventListener('click', generateNewListForm)
+init()
+addListBtn.addEventListener('click', openNewListForm)
