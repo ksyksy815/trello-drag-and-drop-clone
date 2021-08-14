@@ -1,5 +1,6 @@
 import { 
-  btnToAddCard, 
+  generateBtnToAddCard, 
+  generateNewList,
   generateFormToAddNewCard, 
   generateOneListItem,
   generateFormToMakeNewList
@@ -7,7 +8,7 @@ import {
 
 export const makeNewList = (e) => {
   e.preventDefault()
-
+  const mainListWrapper = document.querySelector('#main-list-wrapper')
   generateNewList( mainListWrapper, e.target[0].value)
   e.target[0].value = ''
 }
@@ -24,12 +25,13 @@ export const handleClickBtnToAddCard = (e) => {
 export const handleNewCardSubmission = (e) => {
   e.preventDefault()
   let content = e.target[0].value
-  listItem( e.target.parentElement, content )
+  generateOneListItem( e.target.parentElement, content )
   e.target[0].value = ''
 }
 
 export const closeFormToAddNewList = (e, form) => {
   e.preventDefault()
+  const initialList = document.querySelector('#initial-list')
   initialList.removeChild(form)
 }
 
@@ -37,6 +39,6 @@ export const closeFormToAddNewCard = (parent, grandParent) => {
   grandParent.removeChild(parent)
 
   const div = document.createElement('div')
-  div.appendChild(btnToAddCard())
+  div.appendChild(generateBtnToAddCard())
   grandParent.appendChild(div)
 }
