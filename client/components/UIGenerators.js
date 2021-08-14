@@ -69,7 +69,7 @@ export const generateFormToAddNewCard = (parentElement) => {
   parentElement.appendChild(form)
 }
 
-export const generateNewList = ( parent, listName ) => {
+export const generateNewList = ( parent, list ) => {
   const section = document.createElement('section')
   const ul = document.createElement('ul')
   const span = document.createElement('span')
@@ -78,8 +78,9 @@ export const generateNewList = ( parent, listName ) => {
   const addCardButton = generateBtnToAddCard(ul)
 
   ul.classList.add('item-list')
+  ul.setAttribute('id', list.id)
   span.classList.add('list-title')
-  span.textContent = listName
+  span.textContent = list.name
   i.setAttribute('class', 'fas fa-ellipsis-h')
   div.classList.add('addCardBtnBox')
 
@@ -93,14 +94,15 @@ export const generateNewList = ( parent, listName ) => {
   div.appendChild(addCardButton)
 
   parent.appendChild(section)
-
+  
   return ul
 }
 
-export const generateOneListItem = ( parent, content ) => {
+export const generateOneListItem = ( parent, content, id ) => {
   const li = document.createElement('li')
   li.classList.add('draggable-items')
   li.setAttribute('draggable', true)
+  li.setAttribute('id', id)
   li.textContent = content
 
   addDragStartAndDragEndListener(li)

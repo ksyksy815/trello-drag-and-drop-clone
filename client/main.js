@@ -1,57 +1,21 @@
-import { generateOneListItem, generateNewList } from './components/UIGenerators.js'
-import { openFormToMakeNewList, addDragOverListener } from './functions/functions.js'
+import { makeListsWithData, openFormToMakeNewList } from './functions/functions.js'
+import { requestInitialData } from './functions/requests.js'
 
 /*--- variables ---*/
 
 const addListBtn = document.querySelector('#add-btn')
+let initialData = []
 
-const dummyData = [
-  {
-    name: '리스트1',
-    cards: [
-      '카드1',
-      '카드2',
-      '카드3'
-    ]
-  },
-  {
-    name: '리스트2',
-    cards: [
-      '카드1',
-      '카드2',
-      '카드3'
-    ]
-  }
-]
 
-/*--- functions ---*/
-
-const makeListsWithData = (data) => {
-  data.forEach(list => {
-    const mainListWrapper = document.querySelector('#main-list-wrapper')
-    const ul = generateNewList(mainListWrapper, list.name)
-    addDragOverListener(ul)
-
-    list.cards.map(card => {
-      generateOneListItem(ul, card)
-    })
-  })
-}
+/*--- Initialize ---*/
 
 const initialize = () => {
-  // const response = await fetch('http://localhost:4000/lists', {
-  //   method: "GET",
-  //   mode: "cors",
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   }
-  // })
-  // console.log(response.json())
-
-  makeListsWithData(dummyData)
+  requestInitialData()
+  .then(res => {
+    initialData = JSON.parse(res.initialData)
+    makeListsWithData(initialData)
+  })
   addListBtn.addEventListener('click', openFormToMakeNewList)
 }
-
-/*--- Init ---*/
 
 initialize()

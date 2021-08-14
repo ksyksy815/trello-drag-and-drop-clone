@@ -5,11 +5,36 @@ import {
   generateOneListItem,
   generateFormToMakeNewList
 } from '../components/UIGenerators.js'
+import { 
+  requestToCreateNewList,
+  requestToMakeNewCard,
+  requestToRelocateCard
+} from './requests.js'
 
-export const makeNewList = (e) => {
+export const makeListsWithData = (data) => {
+  data.forEach(list => {
+    const mainListWrapper = document.querySelector('#main-list-wrapper')
+    const ul = generateNewList(mainListWrapper, list)
+    addDragOverListener(ul)
+
+    list.cards.map( card => {
+      generateOneListItem(ul, card.content, card.id)
+    })
+  })
+}
+
+export const makeNewList = async (e) => {
   e.preventDefault()
+
+  const id = await requestToCreateNewList(e.target[0].value)
+  const list = {
+    id,
+    name: e.target[0].value,
+    cards: []
+  }
+
   const mainListWrapper = document.querySelector('#main-list-wrapper')
-  generateNewList( mainListWrapper, e.target[0].value)
+  generateNewList( mainListWrapper, list)
   e.target[0].value = ''
 }
 
@@ -22,11 +47,15 @@ export const handleClickBtnToAddCard = (e) => {
   e.target.parentElement.removeChild(e.target)
 }
 
-export const handleNewCardSubmission = (e) => {
+export const handleNewCardSubmission = async (e) => {
   e.preventDefault()
   let content = e.target[0].value
-  console.dir(e.target.parentElement.previousElementSibling)
-  generateOneListItem( e.target.parentElement.previousElementSibling, content )
+  const listId = e.target.parentElement.parentElement.children[1].id
+  
+  const id = await requestToMakeNewCard( listId, content )
+  
+  const parent = e.target.parentElement.previousElementSibling
+  generateOneListItem( parent, content, id )
   e.target[0].value = ''
 }
 
@@ -61,12 +90,14 @@ export const addDragStartAndDragEndListener = (draggable) => {
 export const addDragOverListener = (list) => {
   list.addEventListener('dragover', (e) => {
     e.preventDefault()
+    
     const hoveredElement = getHoveredElement(list, e.clientY)
     const item = document.querySelector('.dragging')
-    
+
     if (hoveredElement === null) {
       list.appendChild(item)
     } else {
+      requestToRelocateCard(item, list.id)
       list.insertBefore(item, hoveredElement)
     }
   })
