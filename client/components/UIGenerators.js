@@ -79,13 +79,13 @@ export const generateNewList = ( parent, listName ) => {
   span.classList.add('list-title')
   span.textContent = listName
   i.setAttribute('class', 'fas fa-ellipsis-h')
+  div.classList.add('addCardBtnBox')
 
-  div.addEventListener('click', handleClickBtnToAddCard)
+  addCardButton.addEventListener('click', handleClickBtnToAddCard)
 
+  section.appendChild(span)
   section.appendChild(ul)
-  ul.appendChild(span)
-  ul.appendChild(span)
-  ul.appendChild(div)
+  section.appendChild(div)
   span.appendChild(i)
   div.appendChild(addCardButton)
 
@@ -96,10 +96,9 @@ export const generateNewList = ( parent, listName ) => {
 
 export const generateOneListItem = ( parent, content ) => {
   const li = document.createElement('li')
+  li.classList.add('draggable-items')
+  li.setAttribute('draggable', true)
   li.textContent = content
-  if ([...parent.children].length === 2) {
-    parent.insertBefore(li, parent.firstElementChild.nextSibling)
-  } else {
-    parent.insertBefore(li, parent.lastElementChild)
-  }
+
+  parent.appendChild(li)
 }

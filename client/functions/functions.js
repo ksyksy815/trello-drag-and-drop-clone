@@ -25,7 +25,8 @@ export const handleClickBtnToAddCard = (e) => {
 export const handleNewCardSubmission = (e) => {
   e.preventDefault()
   let content = e.target[0].value
-  generateOneListItem( e.target.parentElement, content )
+  console.dir(e.target.parentElement.previousElementSibling)
+  generateOneListItem( e.target.parentElement.previousElementSibling, content )
   e.target[0].value = ''
 }
 
@@ -39,6 +40,54 @@ export const closeFormToAddNewCard = (parent, grandParent) => {
   grandParent.removeChild(parent)
 
   const div = document.createElement('div')
-  div.appendChild(generateBtnToAddCard())
+  div.classList.add('addCardBtnBox')
+
+  const addCardButton = generateBtnToAddCard()
+  addCardButton.addEventListener('click', handleClickBtnToAddCard)
+  div.appendChild(addCardButton)
   grandParent.appendChild(div)
+}
+
+export const enableDragAndDrop = () => {
+  const draggables = document.querySelectorAll('.draggable-items')
+  const lists = document.querySelectorAll('.item-list')
+
+  draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', () => {
+      draggable.classList.add('dragging')
+    })
+
+    draggable.addEventListener('dragend', () => {
+      draggable.classList.remove('dragging')
+    })
+  })
+
+  lists.forEach(list => {
+    list.addEventListener('dragover', (e) => {
+      e.preventDefault()
+      const hoveredElement = getHoveredElement(list, e.clientY)
+      const item = document.querySelector('.dragging')
+      
+      if (hoveredElement === null) {
+        list.appendChild(item)
+      } else {
+        list.insertBefore(item, hoveredElement)
+      }
+    })
+  })
+}
+
+export const getHoveredElement = (list, y) => {
+  const otherElements = [...list.querySelectorAll('.draggable-items:not(.dragging)')]
+  
+  return otherElements.reduce( (closest, current) => {
+    const box = current.getBoundingClientRect()
+    const offset = y - box.top - (box.height / 2)
+    
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: current}
+    } else {
+      return closest
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element
 }
