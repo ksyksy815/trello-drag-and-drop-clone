@@ -342,15 +342,20 @@ main > section, main > div > section {
   row-gap: 0.5rem;
   padding: 0.5rem;
   background-color: var(--gray);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 #new-card-form > textarea {
   margin: 0 0.5rem;
+  width: 100%;
   border: 1px solid var(--input-gray);
   border-radius: 5px;
   padding: 0.5rem;
   min-height: 60px;
   overflow-y: scroll;
+  resize: none;
+  align-self: center;
 }
 
 #new-card-form > textarea:focus {
