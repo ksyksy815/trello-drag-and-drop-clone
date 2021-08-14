@@ -155,11 +155,20 @@ main {
   width: 100%;
   padding: 0 0.5rem;
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   column-gap: 0.5rem;
 }
 
-main > section {
+main > div {
+  width: auto;
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+main > section, main > div > section {
   width: 100%;
+  min-width: 240px;
   max-width: 240px;
 }
 
@@ -178,7 +187,14 @@ main > section {
   background-color: var(--dark-blue-shadow);
 }
 
+#initial-list {
+  position: relative;
+}
+
 #new-list-form {
+  position: absolute;
+  top: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 0.3rem;
@@ -218,7 +234,7 @@ main > section {
 }
 
 #new-list-form > span > button:nth-child(2),
-.item-list > span > button:nth-child(2) {
+.item-list > #new-card-form > span > button:nth-child(2) {
   background: transparent;
   border: none;
   color: rgba(128, 128, 128, 0.664);
@@ -227,7 +243,7 @@ main > section {
 }
 
 #new-list-form > span > button:nth-child(2):hover,
-.item-list > span > button:nth-child(2):hover {
+.item-list > #new-card-form > span > button:nth-child(2):hover {
   cursor: pointer;
 }
 
@@ -242,6 +258,7 @@ main > section {
   border-radius: 5px;
   overflow: hidden;
   row-gap: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .item-list > * {
@@ -275,20 +292,41 @@ main > section {
   background: #fff;
 }
 
-.item-list > button:last-child {
+.item-list > div {
+  position: relative;
+}
+
+.item-list > div:hover {
+  cursor: pointer;
+  background: var(--input-gray);
+}
+
+.item-list > div:hover > .addCardBtn {
+  text-decoration: underline;
+}
+
+.item-list > div > .addCardBtn {
   background: transparent;
   border: none;
   text-align: left;
 }
-.item-list > button:last-child:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  background: var(--input-gray);
+
+.hidden {
+  display: none;
 }
 
 /*--- item-list: writing mode ---*/
 
-.item-list > textarea {
+#new-card-form {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.item-list > #new-card-form > textarea {
   margin: 0 0.5rem;
   border: 1px solid var(--input-gray);
   border-radius: 5px;
@@ -297,7 +335,7 @@ main > section {
   overflow-y: scroll;
 }
 
-.item-list > textarea:focus {
+.item-list > #new-card-form > textarea:focus {
   outline: none;
 }
 
@@ -306,4 +344,5 @@ main > section {
   justify-content: flex-start;
   align-items: center;
   column-gap: 1rem;
+  padding: 0 0.5rem;
 }
