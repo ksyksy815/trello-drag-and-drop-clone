@@ -48,36 +48,31 @@ export const closeFormToAddNewCard = (parent, grandParent) => {
   grandParent.appendChild(div)
 }
 
-export const enableDragAndDrop = () => {
-  const draggables = document.querySelectorAll('.draggable-items')
-  const lists = document.querySelectorAll('.item-list')
-
-  draggables.forEach(draggable => {
-    draggable.addEventListener('dragstart', () => {
-      draggable.classList.add('dragging')
-    })
-
-    draggable.addEventListener('dragend', () => {
-      draggable.classList.remove('dragging')
-    })
+export const addDragStartAndDragEndListener = (draggable) => {
+  draggable.addEventListener('dragstart', () => {
+    draggable.classList.add('dragging')
   })
 
-  lists.forEach(list => {
-    list.addEventListener('dragover', (e) => {
-      e.preventDefault()
-      const hoveredElement = getHoveredElement(list, e.clientY)
-      const item = document.querySelector('.dragging')
-      
-      if (hoveredElement === null) {
-        list.appendChild(item)
-      } else {
-        list.insertBefore(item, hoveredElement)
-      }
-    })
+  draggable.addEventListener('dragend', () => {
+    draggable.classList.remove('dragging')
   })
 }
 
-export const getHoveredElement = (list, y) => {
+export const addDragOverListener = (list) => {
+  list.addEventListener('dragover', (e) => {
+    e.preventDefault()
+    const hoveredElement = getHoveredElement(list, e.clientY)
+    const item = document.querySelector('.dragging')
+    
+    if (hoveredElement === null) {
+      list.appendChild(item)
+    } else {
+      list.insertBefore(item, hoveredElement)
+    }
+  })
+}
+
+const getHoveredElement = (list, y) => {
   const otherElements = [...list.querySelectorAll('.draggable-items:not(.dragging)')]
   
   return otherElements.reduce( (closest, current) => {

@@ -1,5 +1,5 @@
 import { generateOneListItem, generateNewList } from './components/UIGenerators.js'
-import { openFormToMakeNewList } from './functions/functions.js'
+import { openFormToMakeNewList, addDragOverListener } from './functions/functions.js'
 
 /*--- variables ---*/
 
@@ -24,13 +24,13 @@ const dummyData = [
   }
 ]
 
-
 /*--- functions ---*/
 
 const makeListsWithData = (data) => {
   data.forEach(list => {
     const mainListWrapper = document.querySelector('#main-list-wrapper')
     const ul = generateNewList(mainListWrapper, list.name)
+    addDragOverListener(ul)
 
     list.cards.map(card => {
       generateOneListItem(ul, card)
@@ -47,8 +47,8 @@ const initialize = () => {
   //   }
   // })
   // console.log(response.json())
+
   makeListsWithData(dummyData)
-  
   addListBtn.addEventListener('click', openFormToMakeNewList)
 }
 

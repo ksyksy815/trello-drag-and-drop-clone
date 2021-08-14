@@ -3,7 +3,9 @@ import {
   handleClickBtnToAddCard,
   handleNewCardSubmission,
   closeFormToAddNewList,
-  closeFormToAddNewCard
+  closeFormToAddNewCard,
+  addDragStartAndDragEndListener,
+  addDragOverListener
 } from '../functions/functions.js'
 
 export const generateBtnToAddCard = () => {
@@ -81,6 +83,7 @@ export const generateNewList = ( parent, listName ) => {
   i.setAttribute('class', 'fas fa-ellipsis-h')
   div.classList.add('addCardBtnBox')
 
+  addDragOverListener(ul)
   addCardButton.addEventListener('click', handleClickBtnToAddCard)
 
   section.appendChild(span)
@@ -99,6 +102,8 @@ export const generateOneListItem = ( parent, content ) => {
   li.classList.add('draggable-items')
   li.setAttribute('draggable', true)
   li.textContent = content
+
+  addDragStartAndDragEndListener(li)
 
   parent.appendChild(li)
 }
