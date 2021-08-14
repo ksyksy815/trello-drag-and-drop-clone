@@ -4,9 +4,55 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/767686d958.js" crossorigin="anonymous"></script>
+  <script type="module" src="main.js" defer></script>
   <title>김서연: 웹 프론트엔드 과제</title>
 </head>
 <body>
-  
+  <nav id="main-nav">
+    <div class="nav-left">
+      <i class="fas fa-arrow-left"></i>
+      <i class="fab fa-trello"></i>
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="nav-center">
+      <i class="fab fa-trello"></i>
+      <span>Trello</span>
+    </div>
+    <div class="nav-right">
+      <i class="fas fa-plus"></i>
+      <i class="fas fa-bell"></i>
+      <i class="fas fa-user"></i>
+    </div>
+  </nav>
+  <nav id="inner-nav">
+    <div class="inner-nav-left">
+      <div>
+        <h2>웹 프론트엔드 과제</h2>
+        <i class="far fa-star"></i>
+      </div>
+      <div>
+        <span>Personal</span>
+        <span><i class="fas fa-lock"></i> Private</span>
+        <span>
+          <i class="fas fa-user"></i>
+          <i class="fas fa-user-plus"></i>
+        </span>
+      </div>
+    </div>
+    <div class="inner-nav-right">
+      <i class="fas fa-ellipsis-h"></i>
+      <span>Show Menu</span>
+    </div>
+  </nav>
+  <main id="list-board">
+    <div id="main-list-wrapper">
+      
+    </div>
+    <section id="initial-list">
+      <button id="add-btn">Add a list...</button>
+    </section>
+  </main>
 </body>
 </html>
