@@ -39,5 +39,6 @@ module.exports = {
   ],
   setData: ( newData ) => {
     data = newData
+    console.log(`데이터가 성공적으로 변경되었습니다!`)
   }
 }
