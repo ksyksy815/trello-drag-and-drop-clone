@@ -1,13 +1,18 @@
 export const requestInitialData = async () => {
-  const response = await fetch('http://localhost:4000/initialData', {
-    method: "GET",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-
-  return response.json()
+  try {
+    const response = await fetch('http://localhost:4000/initialData', {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+  
+    return response.json()
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
 
 export const requestToCreateNewList = async (listName) => {
@@ -16,17 +21,22 @@ export const requestToCreateNewList = async (listName) => {
     cards: []
   }
 
-  const response = await fetch('http://localhost:4000/list', {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(list)
-  })
-
-  const id = await response.json()
-  return id.id
+  try {
+    const response = await fetch('http://localhost:4000/list', {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(list)
+    })
+  
+    const id = await response.json()
+    return id.id
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
 
 export const requestToMakeNewCard = async (listId, content) => {
@@ -35,27 +45,37 @@ export const requestToMakeNewCard = async (listId, content) => {
     content
   }
 
-  const response = await fetch('http://localhost:4000/card', {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(card)
-  })
-
-  const id = await response.json()
+  try {
+    const response = await fetch('http://localhost:4000/card', {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(card)
+    })
   
-  return id.id
+    const id = await response.json()
+    
+    return id.id
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
 
 export const requestToUpdateOrder = async (updatedList, listId) => {
-  const response = await fetch(`http://localhost:4000/list/${listId}`, {
-    method: "PUT",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(updatedList)
-  })
+  try {
+    await fetch(`http://localhost:4000/list/${listId}`, {
+      method: "PATCH",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(updatedList)
+    })
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
