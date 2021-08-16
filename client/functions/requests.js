@@ -43,24 +43,19 @@ export const requestToMakeNewCard = async (listId, content) => {
     },
     body: JSON.stringify(card)
   })
+
   const id = await response.json()
   
   return id.id
 }
 
-export const requestToRelocateCard = async (item, listId) => {
-  const cardId = item.id
-  const targetInfo = {
-    cardId,
-    listId
-  }
-
-  const response = await fetch('http://localhost:4000/card', {
+export const requestToUpdateOrder = async (updatedList, listId) => {
+  const response = await fetch(`http://localhost:4000/list/${listId}`, {
     method: "PUT",
     mode: "cors",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(targetInfo)
+    body: JSON.stringify(updatedList)
   })
 }
