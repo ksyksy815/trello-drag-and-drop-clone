@@ -16,7 +16,8 @@ export const setListData = (data) => {
 }
 
 export let dragData = {
-  dragging: null,
+  draggingId: null,
+  draggingContent: null,
   hoveredEl: null,
   from: null
 }
