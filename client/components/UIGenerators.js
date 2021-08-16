@@ -5,7 +5,8 @@ import {
   closeFormToAddNewList,
   closeFormToAddNewCard,
   addDragStartAndDragEndListener,
-  addDragOverListener
+  addDragOverListener,
+  addDropListener
 } from '../functions/functions.js'
 
 export const generateBtnToAddCard = () => {
@@ -85,6 +86,7 @@ export const generateNewList = ( parent, list ) => {
   div.classList.add('addCardBtnBox')
 
   addDragOverListener(ul)
+  addDropListener(ul)
   addCardButton.addEventListener('click', handleClickBtnToAddCard)
 
   section.appendChild(span)
