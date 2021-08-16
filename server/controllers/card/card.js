@@ -1,17 +1,21 @@
 const uuid = require('uuid').v4
+const { data, setData } = require('../../data/data.js')
 
 module.exports = {
   createCard: async (req, res) => { 
     const { listId, content } = req.body
-    console.log(`새로운 카드 생성 요청: `, content)
-    
+
     const newCard = {
       id: uuid(),
       content
     }
-    
-    res.status(201).send({id: newCard.id})
 
-    // data.json 파일에 저장하는 로직입니다
+    const newData = data.map( prevList => 
+      prevList.id === listId ? [...prevList.cards, newCard] : prevList
+    )
+
+    setData(newData)
+
+    res.status(201).send({id: newCard.id})
   }
 }
