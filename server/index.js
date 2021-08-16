@@ -9,7 +9,7 @@ const PORT = process.env.PORT
 app.use(express.json())
 app.use(
   cors({
-    origin: 'http://127.0.0.1:5500',
+    origin: process.env.ORIGIN,
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -18,5 +18,5 @@ app.use(
 app.use('/', Router)
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.log(`Server is running on port ${PORT}`)
 })
