@@ -2,17 +2,10 @@ import { makeListsWithData, openFormToMakeNewList } from './functions/functions.
 import { requestInitialData } from './functions/requests.js'
 import { listData, setListData } from './globalStates.js'
 
-
-
-/*--- Variables ---*/
-
-const addListBtn = document.querySelector('#add-btn')
-
-
-
-/*--- Initialize ---*/
-
 const initialize = () => {
+  const addListBtn = document.querySelector('#add-btn')
+  addListBtn.addEventListener('click', openFormToMakeNewList)
+
   requestInitialData()
   .then(res => {
     setListData(res.initialData)
@@ -22,7 +15,6 @@ const initialize = () => {
     console.log(err)
     makeListsWithData(listData)
   })
-  addListBtn.addEventListener('click', openFormToMakeNewList)
 }
 
 initialize()
